@@ -8,8 +8,9 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 
 app.get('/api/*', async (req, res) => {
-  const { path, query } = req;
-  const targetUrl = `https://dev.same.com.co${path.replace('/api', '')}`;
+  const path = req.params[0]; // Get the path after /api/
+  const query = req.query; // Get the query parameters
+  const targetUrl = `https://dev.same.com.co/${path}`;
 
   try {
     const response = await axios.get(targetUrl, {
