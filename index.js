@@ -13,6 +13,8 @@ app.use(express.json()); // To parse JSON bodies
 app.all('/api/*', async (req, res) => {
   const path = req.params[0]; // Get the path after /api/
   const query = req.query; // Get the query parameters
+  delete req.headers.host; // For avoiding certification error
+  delete req.headers.referer; // For avoiding certification error
   const targetUrl = `https://dev.same.com.co/api/public/${path}`;
 
   // Retrieve headers from the incoming request
