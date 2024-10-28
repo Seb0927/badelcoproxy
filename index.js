@@ -15,6 +15,7 @@ app.all('/api/*', async (req, res) => {
   const query = req.query; // Get the query parameters
   delete req.headers.host; // For avoiding certification error
   delete req.headers.referer; // For avoiding certification error
+  console.log(path)
   const targetUrl = `https://dev.same.com.co/api/public/${path}`;
 
   // Retrieve headers from the incoming request
@@ -23,8 +24,6 @@ app.all('/api/*', async (req, res) => {
   // Set up headers for the target request
   const headers = {
     ...incomingHeaders,
-    'apiKey': process.env.VITE_API_KEY,
-    'secretKey': process.env.VITE_SECRET_KEY,
   };
 
   try {
