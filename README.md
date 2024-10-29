@@ -1,3 +1,3 @@
 # badelcoproxy
 
-This is the proxy for badelco soat
+This is the proxy for badelco soat.
