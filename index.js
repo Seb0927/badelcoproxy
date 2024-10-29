@@ -42,7 +42,7 @@ app.all('/api/*', async (req, res) => {
 
 // New endpoint to create a Mercado Pago preference
 app.post('/create_preference', async (req, res) => {
-  const { title, unit_price, quantity } = req.body;
+  const { title, unit_price, quantity, email, name, surname, phone_number } = req.body;
   console.log(title)
 
   const elements = {
@@ -77,15 +77,11 @@ app.post('/create_preference', async (req, res) => {
     payer: {
       phone: {
         area_code: '57',
-        number: 3025934421
+        number: phone_number
       },
-      email: 'sebastianidrobo@hotmail.com',
-      identificacion: {
-        type: 'CEDULA DE CIUDADANIA',
-        number: '1005895182'
-      },
-      name: 'Sebastian',
-      surname: 'Idrobo',
+      email: email,
+      name: name,
+      surname: surname,
     },
     statement_descriptor: "BADELCO",
     
