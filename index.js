@@ -53,11 +53,6 @@ app.post('/create_preference', async (req, res) => {
         quantity,
       },
     ],
-    back_urls: {
-      success: 'https://your-website.com/success',
-      failure: 'https://your-website.com/failure',
-      pending: 'https://your-website.com/pending',
-    },
     "binary_mode": true,
     payment_methods: {
       excluded_payment_methods: [],
