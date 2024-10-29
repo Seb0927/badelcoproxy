@@ -40,9 +40,9 @@ app.all('/api/*', async (req, res) => {
   }
 });
 
-// New endpoint to create a Mercado Pago preference
+// Mercado Pago Under here
 app.post('/create_preference', async (req, res) => {
-  const { title, unit_price, quantity, email, name, surname, phone_number } = req.body;
+  const { title, unit_price, quantity, email, name, surname, phone_number, address, state_name, city_name } = req.body;
   console.log(title)
 
   const elements = {
@@ -74,12 +74,22 @@ app.post('/create_preference', async (req, res) => {
         area_code: '57',
         number: phone_number
       },
+      address: {
+        street_name: address,
+      },
       email: email,
       name: name,
       surname: surname,
     },
+    shipments: {
+      receiver_address: {
+        street_name: address,
+        city_name: city_name,
+        state_name: state_name,
+      }
+    },
     statement_descriptor: "BADELCO",
-    
+    notification_url: "https://a69f-2800-e2-4f80-d2a-56a-fb1-fb75-c910.ngrok-free.app/webhook"
   };
 
   try {
@@ -91,6 +101,30 @@ app.post('/create_preference', async (req, res) => {
     res.status(500).send('Error creating preference');
   }
 });
+
+app.post("/webhook", async function (req, res) {
+  const paymentId = req.query.id;
+
+  try {
+    const response = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`
+      }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data)
+    }
+
+    res.sendStatus(200);
+
+  } catch (error) {
+    console.error('Error: ', error)
+    res.sendStatus(500)
+  }
+})
 
 app.listen(port, () => {
   console.log(`Proxy server running on port ${port}`);
