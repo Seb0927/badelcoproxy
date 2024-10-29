@@ -42,7 +42,7 @@ app.all('/api/*', async (req, res) => {
 
 // Mercado Pago Under here
 app.post('/create_preference', async (req, res) => {
-  const { title, unit_price, quantity, email, name, surname, phone_number, address, state_name, city_name } = req.body;
+  const { title, unit_price, quantity, email, name, surname, phone_number, address, state_name, city_name, identification_number, identification_type } = req.body;
   console.log(title)
 
   const elements = {
@@ -78,6 +78,10 @@ app.post('/create_preference', async (req, res) => {
         street_name: address,
       },
       email: email,
+      identification: {
+        number: identification_number,
+        type: identification_type,
+      },
       name: name,
       surname: surname,
     },
